@@ -1,0 +1,28 @@
+minimo = int(input('introduzca el valor minimo:'))
+maximo = int(input('introduzca el valor maximo:'))
+import random
+
+def randomizador(min,max):
+    numero=0
+    while numero<=min or numero>=max:
+        numero = int(random.random()*100)
+    return numero
+def adivinador(numero):
+    gess = 0
+    while gess !=numero:
+        i = 0
+        i = i+1
+        gess = int(input('introduzca su adivinacion:'))
+        if gess > numero:
+            print("se fue por arriba")
+        if gess < numero:
+            print("se fue por debajo")
+    if i < 7 :
+        print("felicidades adivino en un numero minimo  de veces")
+    else:
+        print("mejor suerte para la proxima")
+numero_randomizado = randomizador(minimo,maximo)
+adivinador(numero_randomizado)
+
+
+
