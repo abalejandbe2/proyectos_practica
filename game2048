@@ -1,0 +1,189 @@
+import string
+#mueve los elementos de una fila a la derecha
+def organizar_derecha(lista):
+    for j in range(len(lista)-1):
+        for i in range(1,len(lista)):
+            if lista[-i]==0:
+                lista[-i]=lista[-i-1]
+                lista[-i-1]=0
+            else:
+                continue
+    return lista
+def sumar_elementos(mat):
+    for i in range(4):
+        for j in range(1,4):
+            if mat[i][-j]==mat[i][-j-1]:
+                mat[i][-j]=mat[i][-j]*2
+                mat[i][-j-1]=0
+            else:
+                continue
+    return mat
+
+def imprimir_matriz(mat):
+    for i in range(4):
+        print(mat[i])
+    #print("\n")
+
+#mueve todos los elementos de la matriz a la derecha
+def organizar_matriz_derecha(mat):
+    for i in range(4):
+        mat[i] = organizar_derecha(mat[i])
+    return mat
+#genera un numero dos en un espacio vacio de la matriz
+def generar_2_random(mat):
+    import random
+    fila=random.randint(0,3)
+    columna=random.randint(0,3)
+    while mat[fila][columna] !=0:
+        fila=random.randint(0,3)
+        columna=random.randint(0,3)
+    mat[fila][columna]=2
+    return mat
+
+#invierte las filas de la matriz 
+def invertir_matriz(mat):
+    for i in range(4):
+        l=1
+        for j in range(4):
+            if j <=(len(mat[i])/2)-1:
+                a=mat[i][j]
+                b=mat[i][-l]
+                mat[i][j]=b
+                mat[i][-l]=a
+                l+=1
+    return mat
+#mueve todos los elementos de la matriz a la izquierda
+def organizar_matriz_izquierda(mat):
+    mat=invertir_matriz(mat)
+    mat=organizar_matriz_derecha(mat)
+    mat=sumar_elementos(mat)
+    mat=organizar_matriz_derecha(mat)
+    mat=invertir_matriz(mat)
+    
+    return mat
+#realiza la conjugada de la matriz invirtiendo fila por columna
+def conjugada(mat):
+    new_mat=[]
+    for i in range(4):
+        new_mat.append([0]*4)
+    for i in range(4):
+        for j in range(4):
+            new_mat[i][j]=mat[j][i]    
+    return new_mat    
+#mueve todos los elementos de la matriz hacia abajo
+def organizar_matriz_abajo(mat):
+    mat=conjugada(mat)
+    mat=organizar_matriz_derecha(mat)
+    mat=sumar_elementos(mat)
+    mat=organizar_matriz_derecha(mat)
+    mat=conjugada(mat)
+    return mat
+#mueve todos los elementos de la matriz hacia arriba
+def organizar_matriz_arriba(mat):
+    mat=conjugada(mat)
+    mat=organizar_matriz_izquierda(mat)
+    mat=conjugada(mat)
+    return mat
+#verifica q la entrada de movimiento sea correcta
+def entrada_movimiento():
+    
+    while True:
+        enter=input("introduzca (d)para moverse a la derecha,(a)para moversela izquierda,(w)para moverse arriba o (s)para moverse abajo:")
+        if enter=="d" or enter=="D"or enter=="a" or enter=="A" or enter=="w" or enter=="W"or enter=="s" or enter=="S" :
+            return enter
+        else:
+            print("entrada no es correcta:")
+            continue
+        
+#ciclo con los movimientos q se pueden realizar al desplazar los elementos de la  matriz a los 4 lados y verificar las condiciones del juego
+def movimiento(mat):
+    while True:
+        entrada=entrada_movimiento()
+        if entrada=="d" or entrada=="D":
+            mat=organizar_matriz_derecha(mat)
+            mat=sumar_elementos(mat)
+            mat=organizar_matriz_derecha(mat)
+            if ganas(mat):
+                print("felicidades ganaste el juego:")
+                break
+            elif pierdes(mat):
+                print("PERDISTE")
+                break
+            mat=generar_2_random(mat)
+            imprimir_matriz(mat)
+            
+            continue
+        elif entrada=="a"or entrada=="A":
+            mat=organizar_matriz_izquierda(mat)
+            if ganas(mat):
+                print("felicidades ganaste el juego:")
+                break
+            elif pierdes(mat):
+                print("PERDISTE")
+                break
+            mat=generar_2_random(mat)
+            imprimir_matriz(mat)
+            continue
+        elif entrada=="w"or entrada=="W":
+            mat=organizar_matriz_arriba(mat)
+            if ganas(mat):
+                print("felicidades ganaste el juego:")
+                break
+            elif pierdes(mat):
+                print("PERDISTE")
+                break
+            mat=generar_2_random(mat)
+            imprimir_matriz(mat)
+            continue
+        elif entrada=="s"or entrada=="S":
+            mat=organizar_matriz_abajo(mat)
+            if ganas(mat):
+                print("felicidades ganaste el juego:")
+                break
+            elif pierdes(mat):
+                print("PERDISTE")
+                break
+            mat=generar_2_random(mat)
+            imprimir_matriz(mat)
+           
+            continue
+#cartel de bienvenida del juego donde se verifica las entradas del usuario        
+def fase_inicial():
+    while True:
+        
+        print("Bienvenido al juego(2048)")
+        si=input("introduzca (si)para jugar y (no)para salir")
+        if si=="si" or si =="SI":
+            juego()
+        elif si=="no"or si=="NO":
+            break
+        else:
+            for i in si:
+                if i in string.digits or i in string.ascii_letters:
+                    print("su entrada debe ser una palabra (si)para jugar y (no)para salir")
+                    continue
+def ganas(mat):
+    for i in range(4):
+        for j in range(4):
+            if mat[i][j]==2048:
+                return True
+            
+    return False
+def pierdes(mat):
+    for i in range(4):
+        for j in range(4):
+            if mat[i][j]==0:
+                return False
+    return True
+
+def juego():
+    matriz=[]
+    for i in range(4):
+        matriz.append([0]*4)
+    matriz=generar_2_random(matriz)
+    matriz=generar_2_random(matriz)
+    imprimir_matriz(matriz)
+    movimiento(matriz)
+
+fase_inicial()
+

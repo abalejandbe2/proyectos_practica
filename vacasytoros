@@ -1,0 +1,68 @@
+def generar_numero():
+    import random
+    numero=[]
+
+
+    while True:
+        a=random.randint(0,9)
+        if a in numero:
+            continue
+        else:
+            numero.append(a)
+            
+        if len(numero)==4:
+            break
+    return numero
+def vacasytoros(numero_ramdon,entrada_usuario):
+    vacas,toros=0,0
+    for i in range(4):
+        if numero_ramdon[i]==entrada_usuario[i]:
+            toros+=1
+        for j in range(4):
+            if entrada_usuario[j]==numero_ramdon[i] and i!=j:
+                vacas+=1
+    return vacas,toros
+
+
+def juego():
+    numero_random=generar_numero()
+    import string
+    print("bienvenido al juego vacas y toros se va a generar un numero aleatorio de 4 digitos y su trabajo es adivinarlo:")
+    print("si adivina la posicion de un digito se le dara un toro y si adivina un digito pero en la posicion equivocada se le dara una vaca:")
+    while True:
+        a=int(input("introduzca un numero de 4 cifras sin q se repita ninguno de sus digitos:"))
+        a=str(a)
+        if len(a)!=4:
+            print("el numero introducido no tiene la longitud deseada pruebe de nuevo")
+            continue
+        elif a in string.ascii_letters:
+            print("debe ser un nunmero")
+            continue
+
+    
+        numero_usuario=[]
+        for i in a:
+            numero_usuario.append(int(i))
+        if numero_random==numero_usuario:
+            print("felicidades ganaste")
+            break
+        print(numero_usuario)
+        print(numero_random)
+        vacas,toros=vacasytoros(numero_random,numero_usuario)
+        print("vacas:",vacas,"toros:",toros)
+        
+
+juego()
+    
+        
+        
+
+
+    
+
+
+
+
+
+
+        

@@ -1,0 +1,63 @@
+def generanumero():
+    import random
+    numero=[" "]*int(random.random()*10)
+    j=0
+    for i in numero:
+       numero[j]=int(random.random()*10)
+       j+=1
+    print("el numero generadoes:",numero)
+    return numero
+def gess__usuario(numero):
+    adivinacion=[" "]*(len(numero))
+    mostrar=["X"]*(len(numero))
+    turnos=0
+    
+    print("el numero generado tiene:",len(numero),"digitos")
+
+    while True:
+        iterador=0
+        adivinacion=validador(numero)
+        for i in numero:
+            if i==adivinacion[iterador]:
+                mostrar[iterador]=i
+                    
+            iterador+=1
+        turnos+=1
+        print("los numeros adivinados fueron",mostrar)
+    
+        
+        if numero==adivinacion:
+            print("felicidades ha adivinado el numero en,",turnos,"intentos  eres el mastermind")
+
+            
+            return 
+                   
+        
+    
+    
+def salida():
+    while True:
+        print("bienvenido al juego de Mastermind")
+        si=input("introduzca si para jugar y no para salir del juego:")
+        if si == "si":
+           gess__usuario(generanumero())
+        
+        elif si == "no" :
+           break
+
+def validador(numero):
+    adivinacion=[" "]*(len(numero))
+    
+    
+    i=0
+    while i < len(numero):
+        print("introduzca el digito numero ",i+1,"de su adivinavion de",len(numero),"digitos:")
+        print (i)
+        digits=int(input(":"))
+        adivinacion[i]=digits
+        i+=1
+    return adivinacion
+         
+salida()
+
+

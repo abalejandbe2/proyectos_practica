@@ -1,0 +1,66 @@
+palabras =["arcoiris","computadora","ciencia","programacion","python"]
+import random
+def seleccionar_palabra():
+    b=len(palabras)
+    while b >= len(palabras):
+        b = int(random.random() * 10)
+   
+    return palabras[b]   
+def polite():
+    nombre=input("cual es su nombre:")
+    print("buena suerte,",nombre)
+def gesser(palabra):
+    gesses=["-"]
+    gesses=gesses*len(palabra)
+    j=0
+    while 1 :
+        gess=validador()
+        
+        if gess in palabra:
+            iterador=0    
+            for i in palabra:       
+                if gess== i:
+                    gesses[iterador]=i
+                iterador=iterador+1
+            print(gesses)
+        else:
+            print("su adinacion fue incorrecta:")
+        if gesses ==palabra:
+            print("felicidades adivino:")
+            break
+        if j==10:
+            print("lo sentimos supero el numero  maximo de intentos vuelva a intentarlo:")
+            break
+        j=j+1
+                
+def lista(palabra):
+    word=[" "]*len(palabra)
+    j=0
+    for i in palabra:
+        word[j]=i
+        j=j+1
+    return word
+def validador():
+    import string
+    gess=input("introduzca su adivinacion la cual debe ser una letra:")
+    if len(gess)!=1:
+        print("su adivinacion debe ser una letra:")
+        validador()
+    if gess in string.ascii_uppercase:
+        gess=gess.lower()
+        return gess
+    if gess in string.digits:
+        print("su adivinacion debe ser un numero")
+        validador()
+    else:
+        return gess
+    
+
+palabra = seleccionar_palabra()
+polite()
+gesser(lista(palabra))       
+    
+    
+
+
+
