@@ -186,4 +186,4 @@ def juego():
     movimiento(matriz)
 
 fase_inicial()
-
+print("esto es una prueba")
